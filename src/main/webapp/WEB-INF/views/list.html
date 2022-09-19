@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+</head>
+<body>
+<h3>Shoes</h3>
+
+    <form th:action="@{/shoes/search}">
+        <input type="text" name="search" placeholder="Enter Name">
+        <input type="submit" value="Search">
+</form>
+<p>
+    <a th:href="@{/shoes/create}">
+        Add new shoes
+    </a>
+</p>
+
+<table id = "shoes">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${shoes}">
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getPrice()}"></td>
+        <td><img width="200" height="200" th:src="@{'/image/' + ${row.image}}" alt="Error"></td>
+<!--        <td th:text="${row.getImage()}"></td>-->
+        <td><a th:href="@{/shoes/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/shoes/{id}/delete(id=${row.getId()})}">delete</a></td>
+        <td><a th:href="@{/shoes/{id}/view(id=${row.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

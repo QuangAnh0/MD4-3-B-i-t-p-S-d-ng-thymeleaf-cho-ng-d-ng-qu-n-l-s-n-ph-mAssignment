@@ -2,24 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
-<h3>View Customer</h3>
+<h3>View Shoes</h3>
 <p>
-    <a th:href="@{/customer}">
-        Back to customer list
+    <a th:href="@{/shoes}">
+        Back to shoes list
     </a>
 </p>
 <div id="detail">
     <div class="cusdetail">
         <label>Name:</label>
-        <label th:text="${customer.name}"></label>
+        <label th:text="${shoe.name}"></label>
     </div>
     <div class="cusdetail">
-        <label>Email:</label>
-        <label th:text="${customer.email}"></label>
+        <label>Price:</label>
+        <label th:text="${shoe.price}"></label>
     </div>
     <div class="cusdetail">
-        <label>Address:</label>
-        <label th:text="${customer.address}"></label>
+        <label>Image:</label>
+        <label th:text="${shoe.image}"></label>
     </div>
 </div>
 <footer th:replace="/layout :: footer"></footer>
