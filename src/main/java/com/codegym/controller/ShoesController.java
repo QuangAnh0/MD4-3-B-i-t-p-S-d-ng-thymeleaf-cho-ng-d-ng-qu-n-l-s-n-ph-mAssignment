@@ -4,6 +4,7 @@ import com.codegym.model.Shoes;
 import com.codegym.model.ShoesForm;
 import com.codegym.service.ShoesService;
 import com.codegym.service.IShoesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/shoes")
 public class ShoesController {
-    private final IShoesService shoesService = new ShoesService();
+    @Autowired
+    private IShoesService shoesService = new ShoesService();
 
     @GetMapping("")
     public String index(Model model) {
@@ -28,18 +30,47 @@ public class ShoesController {
         model.addAttribute("shoes", shoesList);
         return "/list";
     }
+//
+//    @GetMapping("/create")
+//    public String create(Model model) {
+//        model.addAttribute("shoeForm", new ShoesForm());
+//        return "/create";
+//    }
+
 
     @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("shoe", new Shoes());
-        return "/create";
+    public ModelAndView showCreateForm(){
+        ModelAndView modelAndView = new ModelAndView("/create");
+        modelAndView.addObject("shoeForm" , new Shoes());
+        return modelAndView;
     }
-    @PostMapping("/save")
-    public String save(Shoes shoes) {
-//        shoes.setId((Long)(Math.random() * 10000));
-        shoesService.save(shoes);
-        return "redirect:/shoes";
+
+    @PostMapping("/create")
+    public ModelAndView create(@ModelAttribute ShoesForm shoes){
+        MultipartFile multipartFile = shoes.getImage();
+        String fileName= multipartFile.getOriginalFilename();
+        try{
+            FileCopyUtils.copy(shoes.getImage().getBytes(), new File(fileUpload+ fileName));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Shoes s = new Shoes(shoes.getId(), shoes.getName(),shoes.getPrice(),fileName);
+        ModelAndView modelAndView = new ModelAndView("/create");
+        modelAndView.addObject("mess","Quang Anh qua ngu");
+        modelAndView.addObject("shoeForm", new Shoes());
+        shoesService.save(s);
+        return modelAndView;
     }
+
+
+
+
+//    @PostMapping("/save")
+//    public String save(Shoes shoes) {
+////        shoes.setId((Long)(Math.random() * 10000));
+//        shoesService.save(shoes);
+//        return "redirect:/shoes";
+//    }
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Integer id, Model model) {
         model.addAttribute("shoe", shoesService.findById(Integer.valueOf(id)));
@@ -67,24 +98,30 @@ public class ShoesController {
         shoesService.update(Math.toIntExact(shoes.getId()), shoes);
         return "redirect:/shoes";
     }
+
+
+
+
     @Value("D:\\image\\")
     private  String fileUpload;
-    @PostMapping("/create")
-    public ModelAndView saveProduct(@ModelAttribute ShoesForm shoesForm) {
-        MultipartFile multipartFile = shoesForm.getImage();
-        String fileName = multipartFile.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(shoesForm.getImage().getBytes(), new File(fileUpload + fileName));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        Shoes shoes = new Shoes((Integer) shoesForm.getId(), shoesForm.getName(),
-                shoesForm.getPrice(), fileName);
-        shoesService.save(shoes);
-        ModelAndView modelAndView = new ModelAndView("/create");
-        modelAndView.addObject("customerForm", shoesForm);
-        modelAndView.addObject("message", "Created new product successfully !");
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/shoes/add",method =RequestMethod.POST)
+//@PostMapping("/add")
+//    public ModelAndView saveProduct(@ModelAttribute ShoesForm shoesForm) {
+//        MultipartFile multipartFile = shoesForm.getImage();
+//        String fileName = multipartFile.getOriginalFilename();
+//        try {
+//            FileCopyUtils.copy(shoesForm.getImage().getBytes(), new File(fileUpload + fileName));
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        Shoes shoes = new Shoes((Integer) shoesForm.getId(), shoesForm.getName(),
+//                shoesForm.getPrice(), fileName);
+//        shoesService.save(shoes);
+//        ModelAndView modelAndView = new ModelAndView("/create");
+//        modelAndView.addObject("customerForm", shoesForm);
+//        modelAndView.addObject("message", "Created new product successfully !");
+//        return modelAndView;
+//    }
+//
 
 }

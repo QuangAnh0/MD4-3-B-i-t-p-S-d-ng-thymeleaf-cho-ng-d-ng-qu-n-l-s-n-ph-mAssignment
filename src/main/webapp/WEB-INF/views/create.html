@@ -1,16 +1,54 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head th:replace="/layout :: head"></head>-->
+<!--<body>-->
+<!--<h3>Add Shoes</h3>-->
+<!--<p>-->
+<!--    <a th:href="@{/shoes}">-->
+<!--        Back to shoes list-->
+<!--    </a>-->
+<!--</p>-->
+<!--<div id="form">-->
+<!--    <form th:action="@{/shoes/add}" th:object="${shoe}"-->
+<!--          method="POST" novalidate="novalidate" enctype="multipart/form-data">-->
+<!--        <input type="hidden" th:field="*{id}"/>-->
+<!--        <div>-->
+<!--            <label>Name</label>-->
+<!--            <input type="text" th:field="*{name}"/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label>Price</label>-->
+<!--            <input type="email" th:field="*{price}"/>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label>Image</label>-->
+<!--&lt;!&ndash;            <input type="text" th:field="*{image}"/>&ndash;&gt;-->
+<!--            <input type="file" th:field="*{image}"/>-->
+<!--        </div>-->
+<!--        <input type="submit" value="Save"/>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<footer th:replace="/layout :: footer"></footer>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
-<h3>Add Shoes</h3>
+<h3>Edit Shoes</h3>
 <p>
     <a th:href="@{/shoes}">
         Back to shoes list
     </a>
 </p>
+<p th:if="${mess}">
+    <span th:text="${mess}"></span>
+</p>
 <div id="form">
-    <form th:action="@{/shoes/save}" th:object="${shoe}"
-          method="POST" novalidate="novalidate">
+    <form action="#" th:action="@{/shoes/create}" th:object="${shoeForm}"
+          method="post" novalidate="novalidate" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}"/>
         <div>
             <label>Name</label>
@@ -18,14 +56,14 @@
         </div>
         <div>
             <label>Price</label>
-            <input type="email" th:field="*{price}"/>
+            <input type="text" th:field="*{price}"/>
         </div>
         <div>
             <label>Image</label>
-<!--            <input type="text" th:field="*{image}"/>-->
             <input type="file" th:field="*{image}"/>
         </div>
-        <input type="submit" value="Save"/>
+
+        <input type="submit" value="Add"/>
     </form>
 </div>
 <footer th:replace="/layout :: footer"></footer>

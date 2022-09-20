@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Shoes {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private int id;
     private String name;
     private String price;
     private String image;
@@ -20,7 +20,7 @@ public class Shoes {
     public Shoes() {
     }
 
-    public Shoes(Integer id, String name, String price, String image) {
+    public Shoes(int id, String name, String price, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -31,7 +31,7 @@ public class Shoes {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

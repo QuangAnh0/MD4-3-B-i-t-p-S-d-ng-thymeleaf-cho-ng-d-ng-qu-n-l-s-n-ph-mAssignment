@@ -2,6 +2,7 @@ package com.codegym.service;
 
 import com.codegym.model.Shoes;
 import com.codegym.repository.IGeneralRepository;
+import com.codegym.repository.IShoeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class ShoesService implements IShoesService {
 
     @Autowired
-    private IGeneralRepository shoesRepository;
+    private IShoeRepository shoesRepository;
 
     @Override
     public List<Shoes> findAll() {
@@ -26,7 +27,7 @@ public class ShoesService implements IShoesService {
 
     @Override
     public void save(Shoes shoes) {
-
+        shoesRepository.save(shoes);
     }
 
 
